@@ -1,0 +1,28 @@
+# Make Tab autocomplete regardless of filename case
+set completion-ignore-case on
+
+# List all matches in case multiple possible completions are possible
+set show-all-if-ambiguous on
+
+# Show extra file info with completions (like ls -F)
+set visible-stats on
+
+# Color files by types on completion
+set colored-stats on
+
+# Append char to indicate type (like ls -F)
+set mark-symlinked-directories on
+
+# Don't complete hidden files unless the pattern starts with a dot
+set match-hidden-files off
+
+# Use the text that has already been typed as the prefix for searching
+# through commands (basically up/down curved arrow determine history based
+# on what you've typed so far)
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Allow UTF-8 input and output
+set input-meta on
+set output-meta on
+set convert-meta off

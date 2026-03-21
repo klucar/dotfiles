@@ -1,0 +1,6 @@
+# Local overrides (not tracked)
+*.local
+
+# OS files
+.DS_Store
+*~
