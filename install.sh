@@ -8,7 +8,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DOTFILES_DIR"
 
 # Packages to stow (each directory at the top level)
-PACKAGES=(bash vim tmux git starship)
+PACKAGES=(bash vim tmux git starship kitty)
 
 echo "========================================"
 echo "  Dotfiles Install (GNU Stow)"
