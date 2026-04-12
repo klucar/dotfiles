@@ -26,6 +26,7 @@ COMMON_PACKAGES=(
     ripgrep
     fzf
     bat
+    gh
 )
 
 LINUX_PACKAGES=(
@@ -41,6 +42,7 @@ LINUX_PACKAGES=(
 )
 
 MACOS_PACKAGES=(
+    bash
     the_silver_searcher
     openssh
     gnu-sed
@@ -65,6 +67,18 @@ install_linux() {
         echo ""
         echo "==> Installing Starship prompt..."
         curl -sS https://starship.rs/install.sh | sh -s -- -y
+    fi
+
+    # Install 1Password CLI
+    if ! command -v op &>/dev/null; then
+        echo ""
+        echo "==> Installing 1Password CLI..."
+        curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+            sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
+            sudo tee /etc/apt/sources.list.d/1password.list
+        sudo apt-get update -qq
+        sudo apt-get install -y 1password-cli
     fi
 
     echo ""
@@ -93,6 +107,28 @@ install_macos() {
     echo ""
     echo "==> Installing packages..."
     brew install "${COMMON_PACKAGES[@]}" "${MACOS_PACKAGES[@]}"
+
+    # Set Homebrew bash as default shell
+    BREW_BASH="$(brew --prefix)/bin/bash"
+    if [[ -x "$BREW_BASH" ]]; then
+        if ! grep -qF "$BREW_BASH" /etc/shells; then
+            echo ""
+            echo "==> Adding Homebrew bash to /etc/shells..."
+            echo "$BREW_BASH" | sudo tee -a /etc/shells >/dev/null
+        fi
+        if [[ "$SHELL" != "$BREW_BASH" ]]; then
+            echo ""
+            echo "==> Setting Homebrew bash as default shell..."
+            chsh -s "$BREW_BASH"
+        fi
+    fi
+
+    # Install 1Password CLI (cask)
+    if ! command -v op &>/dev/null; then
+        echo ""
+        echo "==> Installing 1Password CLI..."
+        brew install --cask 1password-cli
+    fi
 
     echo ""
     echo "==> macOS packages installed successfully."

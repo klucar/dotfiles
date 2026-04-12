@@ -7,7 +7,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DOTFILES_DIR"
 
-PACKAGES=(bash vim tmux git starship)
+PACKAGES=(bash vim tmux git starship kitty)
 
 echo "Unstowing dotfiles..."
 
