@@ -50,6 +50,8 @@ MACOS_PACKAGES=(
     bash-completion@2
     watch
     starship
+    uv
+    ruff
 )
 
 # ---------- Install functions ----------
@@ -79,6 +81,20 @@ install_linux() {
             sudo tee /etc/apt/sources.list.d/1password.list
         sudo apt-get update -qq
         sudo apt-get install -y 1password-cli
+    fi
+
+    # Install uv (Astral)
+    if ! command -v uv &>/dev/null; then
+        echo ""
+        echo "==> Installing uv..."
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+    fi
+
+    # Install ruff (Astral)
+    if ! command -v ruff &>/dev/null; then
+        echo ""
+        echo "==> Installing ruff..."
+        curl -LsSf https://astral.sh/ruff/install.sh | sh
     fi
 
     echo ""
