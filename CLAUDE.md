@@ -20,7 +20,7 @@ stow -v -t "$HOME" -D bash     # Unstow one package
 
 ## Architecture
 
-- **Stow packages**: `bash`, `vim`, `tmux`, `git`, `starship` — defined in the `PACKAGES` array in `install.sh` and `uninstall.sh`. Add new packages to both scripts.
+- **Stow packages**: `bash`, `vim`, `tmux`, `git`, `starship`, `kitty`, `gh` — defined in the `PACKAGES` array in `install.sh` and `uninstall.sh`. Add new packages to both scripts. The `kitty` package contains a `kitty-themes` git submodule (`dexpota/kitty-themes`) — clone with `--recurse-submodules` or run `git submodule update --init`.
 - **Cross-platform**: `bootstrap.sh` and `.bashrc` branch on `uname -s` (Linux vs Darwin). Keep both paths working when making changes.
 - **Local overrides**: Machine-specific config goes in `~/.bashrc.local` (sourced at end of `.bashrc`, not tracked).
 - **Starship prompt**: Primary prompt; `.bashrc` falls back to a basic PS1 if `starship` isn't installed.

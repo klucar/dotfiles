@@ -26,6 +26,7 @@ cd ~/dotfiles
 | `git`   | `.gitconfig`, `.gitignore_global` | Git config with aliases |
 | `starship` | `.config/starship.toml` | [Starship](https://starship.rs/) cross-shell prompt |
 | `kitty` | `.config/kitty/kitty.conf`, `theme.conf`, `kitty-themes/` (submodule) | Kitty terminal config; themes from [dexpota/kitty-themes](https://github.com/dexpota/kitty-themes) — swap by repointing `theme.conf` |
+| `gh` | `.config/gh/config.yml` | GitHub CLI config. `hosts.yml` (OAuth tokens) is gitignored and stays local. |
 
 ## How It Works
 
