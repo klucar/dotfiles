@@ -8,7 +8,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DOTFILES_DIR"
 
 # Packages to stow (each directory at the top level)
-PACKAGES=(bash vim tmux git starship kitty)
+PACKAGES=(bash vim tmux git starship kitty gh)
 
 echo "========================================"
 echo "  Dotfiles Install (GNU Stow)"
@@ -33,7 +33,14 @@ conflicts_found=false
 
 for pkg in "${PACKAGES[@]}"; do
     if [ -d "$pkg" ]; then
-        # Find all files that stow would create
+        # Unstow first so any existing stow symlinks (including tree-folded
+        # parent-dir symlinks) are removed. Without this, a file target like
+        # ~/.config/kitty/kitty.conf can resolve *through* a folded parent
+        # symlink back into this repo, and the backup step below will
+        # incorrectly move the repo's own file into the backup dir.
+        stow -t "$HOME" -D "$pkg" 2>/dev/null || true
+
+        # Find real (non-symlink) files that stow would create and back them up.
         while IFS= read -r -d '' file; do
             rel="${file#$pkg/}"
             target="$HOME/$rel"
@@ -42,9 +49,6 @@ for pkg in "${PACKAGES[@]}"; do
                 mkdir -p "$backup_dir/$(dirname "$rel")"
                 echo "  Backing up: ~/$rel -> $backup_dir/$rel"
                 mv "$target" "$backup_dir/$rel"
-            elif [ -L "$target" ]; then
-                # Remove existing symlinks so stow can recreate them
-                rm "$target"
             fi
         done < <(find "$pkg" -type f -print0)
     fi
