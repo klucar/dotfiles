@@ -5,8 +5,8 @@ My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 ## Quick Start
 
 ```bash
-# Clone the repo
-git clone https://github.com/klucar/dotfiles.git ~/dotfiles
+# Clone the repo (--recurse-submodules pulls in kitty-themes)
+git clone --recurse-submodules https://github.com/klucar/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # Install system packages (Linux apt or macOS Homebrew)
@@ -25,6 +25,8 @@ cd ~/dotfiles
 | `tmux`  | `.tmux.conf` | Tmux with C-a prefix, vim keys, mouse support |
 | `git`   | `.gitconfig`, `.gitignore_global` | Git config with aliases |
 | `starship` | `.config/starship.toml` | [Starship](https://starship.rs/) cross-shell prompt |
+| `kitty` | `.config/kitty/kitty.conf`, `theme.conf`, `kitty-themes/` (submodule) | Kitty terminal config; themes from [dexpota/kitty-themes](https://github.com/dexpota/kitty-themes) — swap by repointing `theme.conf` |
+| `gh` | `.config/gh/config.yml` | GitHub CLI config. `hosts.yml` (OAuth tokens) is gitignored and stays local. |
 
 ## How It Works
 
@@ -59,4 +61,4 @@ Machine-specific config goes in `~/.bashrc.local` (sourced at the end of `.bashr
 
 `bootstrap.sh` installs these tools via apt (Linux) or Homebrew (macOS):
 
-git, vim, tmux, curl, wget, htop, tree, jq, stow, unzip, zip, make, ripgrep, fzf, bat, silversearcher-ag, build-essential, openssh, bash-completion, and more.
+git, vim, tmux, curl, wget, htop, tree, jq, stow, unzip, zip, make, ripgrep, fzf, bat, uv, ruff, silversearcher-ag, build-essential, openssh, bash-completion, and more.

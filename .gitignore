@@ -4,3 +4,6 @@
 # OS files
 .DS_Store
 *~
+
+# Secrets — gh CLI holds OAuth tokens in hosts.yml; never commit
+gh/.config/gh/hosts.yml
