@@ -39,6 +39,7 @@ LINUX_PACKAGES=(
     bash-completion
     xclip
     net-tools
+    golang-go
 )
 
 MACOS_PACKAGES=(
@@ -52,9 +53,32 @@ MACOS_PACKAGES=(
     starship
     uv
     ruff
+    go
+    bazelisk
 )
 
 # ---------- Install functions ----------
+install_go_tools() {
+    if ! command -v go &>/dev/null; then
+        echo "==> Skipping go-based tools: 'go' not on PATH"
+        return
+    fi
+    local gobin
+    gobin="$(go env GOPATH)/bin"
+    if [[ ! -x "$gobin/buildifier" ]]; then
+        echo ""
+        echo "==> Installing buildifier..."
+        go install github.com/bazelbuild/buildtools/buildifier@latest
+    fi
+    # On Linux, bazelisk isn't in apt — install it via `go install`.
+    # On macOS the `bazelisk` brew formula already provides `bazel`.
+    if [[ "$OS" == "Linux" && ! -x "$gobin/bazelisk" ]]; then
+        echo ""
+        echo "==> Installing bazelisk..."
+        go install github.com/bazelbuild/bazelisk@latest
+    fi
+}
+
 install_linux() {
     echo ""
     echo "==> Updating apt package index..."
@@ -95,6 +119,12 @@ install_linux() {
         echo ""
         echo "==> Installing ruff..."
         curl -LsSf https://astral.sh/ruff/install.sh | sh
+    fi
+
+    # Install bazelisk (provides `bazel`) and buildifier via `go install`
+    install_go_tools
+    if [[ -x "$HOME/go/bin/bazelisk" && ! -e "$HOME/go/bin/bazel" ]]; then
+        ln -s "$HOME/go/bin/bazelisk" "$HOME/go/bin/bazel"
     fi
 
     echo ""
@@ -145,6 +175,9 @@ install_macos() {
         echo "==> Installing 1Password CLI..."
         brew install --cask 1password-cli
     fi
+
+    # Install buildifier via `go install` (bazel comes from the bazelisk formula)
+    install_go_tools
 
     echo ""
     echo "==> macOS packages installed successfully."

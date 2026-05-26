@@ -61,4 +61,4 @@ Machine-specific config goes in `~/.bashrc.local` (sourced at the end of `.bashr
 
 `bootstrap.sh` installs these tools via apt (Linux) or Homebrew (macOS):
 
-git, vim, tmux, curl, wget, htop, tree, jq, stow, unzip, zip, make, ripgrep, fzf, bat, uv, ruff, silversearcher-ag, build-essential, openssh, bash-completion, and more.
+git, vim, tmux, curl, wget, htop, tree, jq, stow, unzip, zip, make, ripgrep, fzf, bat, uv, ruff, go, bazelisk (provides `bazel`), buildifier, silversearcher-ag, build-essential, openssh, bash-completion, and more.
