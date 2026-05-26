@@ -49,3 +49,6 @@ alias tn='tmux new-session -s'
 
 # ---------- Grep ----------
 alias grep='grep --color=auto'
+
+# ---------- Claude ----------
+alias ccr='claude --resume'
