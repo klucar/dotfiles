@@ -39,6 +39,12 @@ LINUX_PACKAGES=(
     bash-completion
     xclip
     net-tools
+    iputils-ping
+    traceroute
+    mtr-tiny
+    dnsutils
+    tcpdump
+    iproute2
     golang-go
 )
 
